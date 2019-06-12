@@ -29,6 +29,7 @@ public class CategoryMapperTest {
     @Test
     public void map(){
         Category category = mapper.map(categoryContract, Category.class);
+        Assert.assertNotNull(category.getId());
         Assert.assertEquals(categoryContract.getId(), category.getId().toString());
         Assert.assertEquals(categoryContract.getName(), category.getName());
 
