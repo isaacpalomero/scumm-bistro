@@ -108,4 +108,16 @@ public class CategoryControllerTest {
         Assert.assertNull(response.getBody());
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+    
+    @Test
+    public void createCategory(){
+        //Test
+        //CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
+        //CategoryContract contractReturned = controllerTest.createCategory(contract);
+
+        //verify(mockCategory, times(1)).setName(contract.getName());
+        verify(categoryRepository, times(1)).save(any(Category.class));
+        verify(modelMapper, times(1)).map(any(Category.class), eq(CategoryContract.class));
+    }
+
 }
