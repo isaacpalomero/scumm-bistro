@@ -112,8 +112,8 @@ public class CategoryControllerTest {
     @Test
     public void createCategory(){
         //Test
-        //CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
-        //CategoryContract contractReturned = controllerTest.createCategory(contract);
+        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
+        CategoryContract contractReturned = controllerTest.createCategory(contract);
 
         //verify(mockCategory, times(1)).setName(contract.getName());
         verify(categoryRepository, times(1)).save(any(Category.class));
