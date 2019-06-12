@@ -6,6 +6,7 @@ import com.scumm.core.domain.entities.Category;
 import com.scumm.core.domain.repositories.CategoryRepository;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -19,25 +20,36 @@ import static org.mockito.Mockito.*;
 
 public class CategoryControllerTest {
 
-    @Test
-    public void testGet() {
+
+    private CategoryRepository categoryRepository;
+    private ModelMapper modelMapper;
+    private String id;
+    private Category category;
+    private Optional<Category> optionalCategory;
+    private CategoryContract contract;
+
+    @Before
+    public void setup() {
         //mocks
-        String id = "5cff81cf7ae84c269cc8d6d4";
-        CategoryRepository categoryRepository = mock(CategoryRepository.class);
-        ModelMapper modelMapper = mock(ModelMapper.class);
+        id = "5cff81cf7ae84c269cc8d6d4";
+        categoryRepository = mock(CategoryRepository.class);
+        modelMapper = mock(ModelMapper.class);
 
-        Category category = new Category();
+        category = new Category();
 
-        Optional<Category> optionalCategory = Optional.of(category);
+        optionalCategory = Optional.of(category);
 
-        CategoryContract contract = new CategoryContract();
+        contract = new CategoryContract();
+    }
 
+    @Test
+    public void getCategorySuccess() {
         //expectatives
         when(categoryRepository.findById(eq(new ObjectId(id)))).thenReturn(optionalCategory);
         when(modelMapper.map(category, CategoryContract.class)).thenReturn(contract);
 
         //test
-        CategoryController controllerTest = new CategoryController(categoryRepository,modelMapper);
+        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
         ResponseEntity<CategoryContract> response = controllerTest.getById(id);
 
         //verify
@@ -45,7 +57,24 @@ public class CategoryControllerTest {
         verify(modelMapper).map(category, CategoryContract.class);
         Assert.assertEquals(contract,response.getBody());
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
-
     }
+
+    @Test
+    public void getCategoryNotFound() {
+        //expectatives
+        //when(categoryRepository.findById(eq(new ObjectId(id)))).thenReturn(Optional.of(null));
+        //when(modelMapper.map(category, CategoryContract.class)).thenReturn(contract);
+
+        //test
+        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
+        ResponseEntity<CategoryContract> response = controllerTest.getById(id);
+
+        //verify
+        verify(categoryRepository).findById(any(ObjectId.class));
+        verify(modelMapper, never()).map(any(Category.class), eq(CategoryContract.class));
+        Assert.assertNull(response.getBody());
+        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
 
 }
