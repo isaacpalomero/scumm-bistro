@@ -19,11 +19,16 @@ import java.util.stream.Collectors;
 @RequestMapping("/category")
 public class CategoryController {
 
-    @Autowired
     private CategoryRepository repository;
 
-    @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    public CategoryController(CategoryRepository categoryRepository, ModelMapper modelMapper) {
+        repository = categoryRepository;
+        mapper = modelMapper;
+
+    }
 
     @GetMapping
     public List<CategoryContract> getAll() {

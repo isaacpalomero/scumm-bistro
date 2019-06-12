@@ -2,3 +2,5 @@
 .idea/*
 data_core
 .gradle
+*/out/*
+test.iml
