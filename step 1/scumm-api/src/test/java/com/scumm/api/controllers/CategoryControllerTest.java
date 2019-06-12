@@ -36,6 +36,7 @@ public class CategoryControllerTest {
         modelMapper = mock(ModelMapper.class);
 
         category = new Category();
+        category.setId(new ObjectId(id));
 
         optionalCategory = Optional.of(category);
 
@@ -76,5 +77,35 @@ public class CategoryControllerTest {
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    @Test
+    public void deleteCategorySuccess() {
+        // expectatives
+        when(categoryRepository.findById(eq(new ObjectId(id)))).thenReturn(optionalCategory);
+        when(modelMapper.map(category, CategoryContract.class)).thenReturn(contract);
 
+        // test
+        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
+        ResponseEntity<CategoryContract> response = controllerTest.deleteById(id);
+
+        //Verify
+        verify(categoryRepository).findById(any(ObjectId.class));
+        verify(categoryRepository).deleteById(category.getId());
+        verify(modelMapper).map(category, CategoryContract.class);
+
+        Assert.assertEquals(contract, response.getBody());
+        Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void deleteCategoryNotFound() {
+        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
+        ResponseEntity<CategoryContract> response = controllerTest.deleteById(id);
+
+        //Verify
+        verify(categoryRepository).findById(any(ObjectId.class));
+        verify(categoryRepository, never()).deleteById(new ObjectId(id));
+        verify(modelMapper, never()).map(any(Category.class), eq(CategoryContract.class));
+        Assert.assertNull(response.getBody());
+        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
 }
