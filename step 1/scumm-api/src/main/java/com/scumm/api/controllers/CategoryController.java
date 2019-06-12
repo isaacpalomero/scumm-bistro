@@ -2,6 +2,7 @@ package com.scumm.api.controllers;
 
 import com.scumm.api.contracts.CategoryContract;
 import com.scumm.core.domain.entities.Category;
+import com.scumm.api.factories.ICategoryFactory;
 import com.scumm.core.domain.repositories.CategoryRepository;
 import org.bson.types.ObjectId;
 import org.modelmapper.ModelMapper;
@@ -22,12 +23,14 @@ public class CategoryController {
     private CategoryRepository repository;
 
     private ModelMapper mapper;
+    private ICategoryFactory categoryFactory;
 
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository, ModelMapper modelMapper) {
+    public CategoryController(CategoryRepository categoryRepository, ModelMapper modelMapper, ICategoryFactory categoryFactory) {
         repository = categoryRepository;
         mapper = modelMapper;
 
+        this.categoryFactory = categoryFactory;
     }
 
     @GetMapping
@@ -52,12 +55,11 @@ public class CategoryController {
 
 
     @PostMapping
-    public CategoryContract createCategory(@Valid @RequestBody CategoryContract categoryContract) {
+    public ResponseEntity<CategoryContract> createCategory(@Valid @RequestBody CategoryContract categoryContract) {
 
-        Category category = new Category();
-        category.setName(categoryContract.getName());
+        Category category = categoryFactory.createFromContract(categoryContract);
         repository.save(category);
-        return mapper.map(category, CategoryContract.class);
+        return new ResponseEntity<>(mapper.map(category, CategoryContract.class), HttpStatus.CREATED);
     }
 
     @PutMapping(value="/{id}")
