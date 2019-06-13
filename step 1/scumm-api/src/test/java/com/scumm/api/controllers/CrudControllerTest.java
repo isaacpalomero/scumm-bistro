@@ -18,7 +18,7 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class CategoryControllerTest {
+public class CrudControllerTest {
 
 
     private CategoryRepository categoryRepository;
