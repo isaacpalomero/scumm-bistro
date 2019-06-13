@@ -2,6 +2,7 @@ package com.scumm.api.controllers;
 
 import com.scumm.api.contracts.DishContract;
 import com.scumm.api.factories.DishFactory;
+import com.scumm.api.factories.IDishFactory;
 import com.scumm.api.validators.IContractValidator;
 import com.scumm.core.domain.entities.Dish;
 import com.scumm.core.domain.repositories.CategoryRepository;
@@ -20,10 +21,10 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/dish")
-public class DishController extends AbstractCrudController<DishRepository, DishFactory, Dish, DishContract> {
+public class DishController extends AbstractCrudController<DishRepository, IDishFactory, Dish, DishContract> {
 
     @Autowired
-    protected DishController(DishRepository repository, ModelMapper modelMapper, DishFactory factory, IContractValidator<DishContract> validator) {
+    protected DishController(DishRepository repository, ModelMapper modelMapper, IDishFactory factory, IContractValidator<DishContract> validator) {
         super(repository, modelMapper, factory, validator, DishContract.class);
     }
 

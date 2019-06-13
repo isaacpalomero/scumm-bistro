@@ -20,10 +20,10 @@ import java.util.stream.Collectors;
 public abstract class AbstractCrudController<TRepository extends MongoRepository<TModel, ObjectId>,
         TFactory extends IFactory<TModel, TContract>,TModel extends Model,TContract extends Contract> {
 
-    protected TRepository repository;
-    protected ModelMapper mapper;
-    protected TFactory factory;
-    protected IContractValidator<TContract> validator;
+    private TRepository repository;
+    private ModelMapper mapper;
+    private TFactory factory;
+    private IContractValidator<TContract> validator;
     private final Class<TContract> typeTContract;
 
     protected AbstractCrudController(TRepository repository, ModelMapper modelMapper, TFactory factory, IContractValidator<TContract> validator, Class<TContract> typeTContract) {
