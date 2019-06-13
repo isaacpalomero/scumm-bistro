@@ -7,18 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CategoryFactory implements ICategoryFactory {
-
-    private ModelMapper mapper;
+public class CategoryFactory extends AbstractModelFactory<Category, CategoryContract> implements ICategoryFactory{
 
     @Autowired
     public CategoryFactory(ModelMapper mapper) {
-        this.mapper = mapper;
+        super(mapper, Category.class);
     }
 
-    @Override
-    public Category createFromContract(CategoryContract contract) {
-        Category category = mapper.map(contract, Category.class);
-        return category;
-    }
 }
