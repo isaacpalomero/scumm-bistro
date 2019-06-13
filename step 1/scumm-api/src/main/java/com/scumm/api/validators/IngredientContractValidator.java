@@ -1,4 +1,10 @@
 package com.scumm.api.validators;
 
-public class IngredientContractValidator {
+import com.scumm.api.contracts.IngredientContract;
+
+public class IngredientContractValidator implements IContractValidator<IngredientContract>  {
+
+
+    @Override
+    public boolean validate(IngredientContract contract) { return true; }
 }
