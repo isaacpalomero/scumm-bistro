@@ -2,6 +2,7 @@ package com.scumm.api.controllers;
 
 import com.scumm.api.contracts.CategoryContract;
 import com.scumm.api.factories.CategoryFactory;
+import com.scumm.api.validators.IContractValidator;
 import com.scumm.core.domain.entities.Category;
 import com.scumm.api.factories.ICategoryFactory;
 import com.scumm.core.domain.repositories.CategoryRepository;
@@ -22,8 +23,8 @@ import java.util.stream.Collectors;
 public class CategoryController extends AbstractCrudController<CategoryRepository, ICategoryFactory, Category, CategoryContract> {
 
     @Autowired
-    public CategoryController(CategoryRepository categoryRepository, ModelMapper modelMapper, ICategoryFactory categoryFactory) {
-        super(categoryRepository, modelMapper, categoryFactory, CategoryContract.class);
+    public CategoryController(CategoryRepository categoryRepository, ModelMapper modelMapper, ICategoryFactory categoryFactory, IContractValidator<CategoryContract> validator) {
+        super(categoryRepository, modelMapper, categoryFactory, validator, CategoryContract.class);
     }
 
 
