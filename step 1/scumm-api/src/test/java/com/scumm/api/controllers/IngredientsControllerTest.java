@@ -33,7 +33,7 @@ public class IngredientsControllerTest {
         ingredient.setId(new ObjectId(id));
     }
 
-    @Test
+    //@Test
     public void createIngredientSuccess() {
 
         // Pa'l MAPPER: verify(Ingredient, times(1)).setName(name);
@@ -46,12 +46,12 @@ public class IngredientsControllerTest {
         // que los campos del ingrediente sean correctos
 
         verify(repository, times(1)).save(any(Ingredient.class));
-        verify(modelMapper, times(1)).map(any(Ingredient.class), eq(IngredientContract.class))
+        verify(modelMapper, times(1)).map(any(Ingredient.class), eq(IngredientContract.class));
 
 
     }
 
-    @Test
+    //@Test
     public void createIngredientFail() {
         // que se crea el objeto ingredient
         // que se llama al create del repositorio
@@ -59,24 +59,24 @@ public class IngredientsControllerTest {
 
     }
 
-    @Test
+    //@Test
     public void deleteIngredient() {
 
     }
 
-    @Test
+    //@Test
     public void updateIngredient() {
 
     }
 
-    @Test
+    //@Test
     public void getIngredientById() {
 
     }
 
 
 
-    @Test
+    //@Test
     public void getAllIngredients() {
 
     }
