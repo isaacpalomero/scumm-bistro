@@ -1,14 +1,16 @@
 package com.scumm.api.contracts;
 
+
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.PositiveOrZero;
 
 public class IngredientContract extends Contract {
 
-    @NotEmpty(message = "name can not be empty")
     private String name;
     private double quantity;
     private String unit;
 
+    @NotEmpty(message = "name can not be empty")
     public String getName() {
         return name;
     }
@@ -17,6 +19,7 @@ public class IngredientContract extends Contract {
         this.name = name;
     }
 
+    @PositiveOrZero(message = "Quantity cannot be negative")
     public double getQuantity() { return quantity; }
 
     public void setQuantity(double quantity) { this.quantity = quantity; }
