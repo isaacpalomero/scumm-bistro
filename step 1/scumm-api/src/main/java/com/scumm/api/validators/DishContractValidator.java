@@ -18,6 +18,7 @@ public class DishContractValidator implements IContractValidator<DishContract> {
 
     @Override
     public boolean validate(DishContract contract) {
-        return categoryRepository.existsById(new ObjectId(contract.getCategoryId()));
+        ObjectId categoryId = new ObjectId(contract.getCategoryId());
+        return categoryRepository.existsById(categoryId);
     }
 }
