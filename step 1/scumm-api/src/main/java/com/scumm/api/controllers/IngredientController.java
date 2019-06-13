@@ -2,6 +2,7 @@ package com.scumm.api.controllers;
 
 import com.scumm.api.contracts.IngredientContract;
 import com.scumm.api.factories.IIngredientFactory;
+import com.scumm.api.validators.IContractValidator;
 import com.scumm.core.domain.entities.Ingredient;
 import com.scumm.core.domain.repositories.IngredientRepository;
 import org.modelmapper.ModelMapper;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class IngredientController extends AbstractCrudController<IngredientRepository, IIngredientFactory, Ingredient, IngredientContract>{
 
     @Autowired
-    public IngredientController(IngredientRepository repository, ModelMapper modelMapper, IIngredientFactory factory) {
-        super(repository, modelMapper, factory, IngredientContract.class);
+    public IngredientController(IngredientRepository repository, ModelMapper modelMapper, IIngredientFactory factory, IContractValidator<IngredientContract> validator) {
+        super(repository, modelMapper, factory, validator, IngredientContract.class);
     }
 
 }
