@@ -21,6 +21,9 @@ public class ModelMapperBuilder implements IModelMapperBuilder {
         mapper.addConverter(new Converter<String, ObjectId>() {
             @Override
             public ObjectId convert(MappingContext<String, ObjectId> applicationContext) {
+                if(applicationContext.getSource() == null) {
+                    return null;
+                }
                 return new ObjectId(applicationContext.getSource());
             }
         });
