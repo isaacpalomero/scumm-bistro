@@ -2,6 +2,7 @@ package com.scumm.api.controllers;
 
 
 import com.scumm.api.contracts.CategoryContract;
+import com.scumm.api.validators.IContractValidator;
 import com.scumm.core.domain.entities.Category;
 import com.scumm.api.factories.ICategoryFactory;
 import com.scumm.core.domain.repositories.CategoryRepository;
@@ -29,6 +30,7 @@ public class CrudControllerTest {
     private CategoryContract contract;
     private ICategoryFactory categoryFactory;
     private CategoryController controllerTest;
+    private IContractValidator<CategoryContract> categoryContractValidator;
 
     @Before
     public void setup() {
@@ -37,6 +39,7 @@ public class CrudControllerTest {
         categoryRepository = mock(CategoryRepository.class);
         modelMapper = mock(ModelMapper.class);
         categoryFactory = mock(ICategoryFactory.class);
+        categoryContractValidator = (IContractValidator<CategoryContract>) mock(IContractValidator.class);
 
         category = new Category();
         category.setId(new ObjectId(id));
@@ -44,7 +47,7 @@ public class CrudControllerTest {
         optionalCategory = Optional.of(category);
 
         contract = new CategoryContract();
-        controllerTest = new CategoryController(categoryRepository, modelMapper, categoryFactory);
+        controllerTest = new CategoryController(categoryRepository, modelMapper, categoryFactory, categoryContractValidator);
     }
 
     @Test
@@ -110,16 +113,30 @@ public class CrudControllerTest {
     }
     
     @Test
-    public void createCategory(){
+    public void createCategoryValidationSuccess(){
 
         when(categoryFactory.createFromContract(contract)).thenReturn(category);
+        when(categoryContractValidator.validate(contract)).thenReturn(true);
 
         //Test
-        ResponseEntity<CategoryContract> contractReturned = controllerTest.createCategory(contract);
+        ResponseEntity<CategoryContract> response = controllerTest.create(contract);
 
         verify(categoryFactory, times(1)).createFromContract(contract);
         verify(categoryRepository, times(1)).save(any(Category.class));
         verify(modelMapper, times(1)).map(any(Category.class), eq(CategoryContract.class));
+        verify(categoryContractValidator, times(1)).validate(contract);
+        Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    }
+
+    @Test
+    public void createCategoryValidationFailure(){
+        when(categoryContractValidator.validate(contract)).thenReturn(false);
+
+        //Test
+        ResponseEntity<CategoryContract> response = controllerTest.create(contract);
+
+        verify(categoryContractValidator, times(1)).validate(contract);
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
 }
