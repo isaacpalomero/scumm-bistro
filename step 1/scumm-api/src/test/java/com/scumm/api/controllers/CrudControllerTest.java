@@ -3,6 +3,7 @@ package com.scumm.api.controllers;
 
 import com.scumm.api.contracts.CategoryContract;
 import com.scumm.core.domain.entities.Category;
+import com.scumm.api.factories.ICategoryFactory;
 import com.scumm.core.domain.repositories.CategoryRepository;
 import org.bson.types.ObjectId;
 import org.junit.Assert;
@@ -12,13 +13,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class CategoryControllerTest {
+public class CrudControllerTest {
 
 
     private CategoryRepository categoryRepository;
@@ -27,6 +27,8 @@ public class CategoryControllerTest {
     private Category category;
     private Optional<Category> optionalCategory;
     private CategoryContract contract;
+    private ICategoryFactory categoryFactory;
+    private CategoryController controllerTest;
 
     @Before
     public void setup() {
@@ -34,6 +36,7 @@ public class CategoryControllerTest {
         id = "5cff81cf7ae84c269cc8d6d4";
         categoryRepository = mock(CategoryRepository.class);
         modelMapper = mock(ModelMapper.class);
+        categoryFactory = mock(ICategoryFactory.class);
 
         category = new Category();
         category.setId(new ObjectId(id));
@@ -41,6 +44,7 @@ public class CategoryControllerTest {
         optionalCategory = Optional.of(category);
 
         contract = new CategoryContract();
+        controllerTest = new CategoryController(categoryRepository, modelMapper, categoryFactory);
     }
 
     @Test
@@ -50,7 +54,6 @@ public class CategoryControllerTest {
         when(modelMapper.map(category, CategoryContract.class)).thenReturn(contract);
 
         //test
-        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
         ResponseEntity<CategoryContract> response = controllerTest.getById(id);
 
         //verify
@@ -67,7 +70,6 @@ public class CategoryControllerTest {
         //when(modelMapper.map(category, CategoryContract.class)).thenReturn(contract);
 
         //test
-        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
         ResponseEntity<CategoryContract> response = controllerTest.getById(id);
 
         //verify
@@ -84,7 +86,6 @@ public class CategoryControllerTest {
         when(modelMapper.map(category, CategoryContract.class)).thenReturn(contract);
 
         // test
-        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
         ResponseEntity<CategoryContract> response = controllerTest.deleteById(id);
 
         //Verify
@@ -98,7 +99,6 @@ public class CategoryControllerTest {
 
     @Test
     public void deleteCategoryNotFound() {
-        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
         ResponseEntity<CategoryContract> response = controllerTest.deleteById(id);
 
         //Verify
@@ -111,11 +111,13 @@ public class CategoryControllerTest {
     
     @Test
     public void createCategory(){
-        //Test
-        CategoryController controllerTest = new CategoryController(categoryRepository, modelMapper);
-        CategoryContract contractReturned = controllerTest.createCategory(contract);
 
-        //verify(mockCategory, times(1)).setName(contract.getName());
+        when(categoryFactory.createFromContract(contract)).thenReturn(category);
+
+        //Test
+        ResponseEntity<CategoryContract> contractReturned = controllerTest.createCategory(contract);
+
+        verify(categoryFactory, times(1)).createFromContract(contract);
         verify(categoryRepository, times(1)).save(any(Category.class));
         verify(modelMapper, times(1)).map(any(Category.class), eq(CategoryContract.class));
     }
