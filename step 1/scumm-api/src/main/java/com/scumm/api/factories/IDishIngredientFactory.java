@@ -2,7 +2,8 @@ package com.scumm.api.factories;
 
 import com.scumm.api.contracts.DishIngredientContract;
 import com.scumm.core.domain.entities.DishIngredient;
-import com.sun.tools.javac.util.List;
+
+import java.util.List;
 
 public interface IDishIngredientFactory {
 
