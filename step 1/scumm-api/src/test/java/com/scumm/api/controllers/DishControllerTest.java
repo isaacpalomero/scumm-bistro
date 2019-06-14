@@ -10,6 +10,7 @@ import com.scumm.api.factories.IIngredientFactory;
 import com.scumm.api.services.IDishService;
 import com.scumm.api.validators.IContractValidator;
 import com.scumm.core.domain.entities.Dish;
+import com.scumm.core.domain.entities.DishIngredient;
 import com.scumm.core.domain.entities.Model;
 import com.scumm.core.domain.repositories.DishRepository;
 import org.bson.types.ObjectId;
@@ -28,7 +29,8 @@ import static org.mockito.Mockito.*;
 public class DishControllerTest {
 
     private DishController controller;
-    private final List<DishIngredientContract> ingredientList = new ArrayList<>();
+    private final List<DishIngredientContract> ingredientContractList = new ArrayList<>();
+    private final List<DishIngredient> ingredientList = new ArrayList<>();
     private DishRepository repository;
     private ModelMapper modelMapper;
     private IDishFactory dishFactory;
@@ -57,7 +59,7 @@ public class DishControllerTest {
         String ingredientId = "quinoa123455";
         dishIngredientContract.setIngredientId(ingredientId);
         dishIngredientContract.setQuantity(1);
-        ingredientList.add(dishIngredientContract);
+        ingredientContractList.add(dishIngredientContract);
 
 
     }
@@ -71,11 +73,11 @@ public class DishControllerTest {
         when(dishFactory.getById(dishId)).thenReturn(dish);
 
         // test
-        ResponseEntity response = controller.addIngredients(dishId, ingredientList);
+        ResponseEntity response = controller.addIngredients(dishId, ingredientContractList);
 
         // verifications
         verify(dishFactory, times(1)).getById(dishId);
-        verify(dishIngredientFactory, times(1)).createDishIngredientsFromContracts(ingredientList);
+        verify(dishIngredientFactory, times(1)).createDishIngredientsFromContracts(ingredientContractList);
         verify(dishService, times(1)).addIngredients(any(Dish.class), any(List.class));
         Assert.assertNull(response.getBody());
         Assert.assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -85,29 +87,30 @@ public class DishControllerTest {
     public void addIngredientsFailDishDoesNotExist() throws ModelNotFoundException {
 
         // test
-        ResponseEntity response = controller.addIngredients(dishId, ingredientList);
+        ResponseEntity response = controller.addIngredients(dishId, ingredientContractList);
 
         verify(dishFactory, times(1)).getById(dishId);
-        verify(dishIngredientFactory, never()).createDishIngredientsFromContracts(ingredientList);
+        verify(dishIngredientFactory, never()).createDishIngredientsFromContracts(ingredientContractList);
         verify(dishService, never()).addIngredients(any(Dish.class), any(List.class));
         Assert.assertNull(response.getBody());
         Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
-   //@Test
+   @Test
     public void addIngredientsFailIngredientDoesNotExist() throws ModelNotFoundException {
 
         when(dishFactory.getById(dishId)).thenReturn(dish);
+        doThrow(new ModelNotFoundException()).when(dishService).addIngredients(dish, ingredientList);
 
         // test
-        ResponseEntity response = controller.addIngredients(dishId, ingredientList);
+        ResponseEntity response = controller.addIngredients(dishId, ingredientContractList);
 
         // verifications
         verify(dishFactory, times(1)).getById(dishId);
-        verify(dishIngredientFactory, times(1)).createDishIngredientsFromContracts(ingredientList);
+        verify(dishIngredientFactory, times(1)).createDishIngredientsFromContracts(ingredientContractList);
         verify(dishService, times(1)).addIngredients(any(Dish.class), any(List.class));
         Assert.assertNull(response.getBody());
-        Assert.assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        Assert.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
 }
