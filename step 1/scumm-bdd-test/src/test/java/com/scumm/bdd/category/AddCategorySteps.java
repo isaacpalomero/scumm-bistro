@@ -20,6 +20,7 @@ public class AddCategorySteps {
         CategoryScenario.getInstance().setCategoryName(categoryName);
     }
 
+    @Given("Doy de alta la categoria")
     @When("Cuando doy de alta la categoria")
     public void cuando_doy_de_alta_la_categoria() throws IOException {
         Category category = new Category();

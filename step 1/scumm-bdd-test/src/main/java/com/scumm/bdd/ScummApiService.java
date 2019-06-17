@@ -29,5 +29,8 @@ public interface ScummApiService {
 
     @GET("dish/{id}")
     Call<Dish> getDish(@Path("id") String id);
+
+    @PUT("dish/{id}")
+    Call<Dish> updateDish(@Path("id") String id, @Body Dish plato);
 }
 
