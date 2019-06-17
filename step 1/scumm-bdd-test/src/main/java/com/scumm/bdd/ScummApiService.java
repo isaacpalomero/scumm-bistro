@@ -1,6 +1,7 @@
 package com.scumm.bdd;
 
 import com.scumm.bdd.contracts.api.Category;
+import com.scumm.bdd.contracts.api.Dish;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -20,5 +21,10 @@ public interface ScummApiService {
     @POST("category")
     Call<Category> createCategory(@Body Category category);
 
+    @POST("dish")
+    Call<Dish> createDish(@Body Dish plato);
+
+    @GET("dish/{id}")
+    Call<Dish> getDish(@Path("id") String id);
 }
 
