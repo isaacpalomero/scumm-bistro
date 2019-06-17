@@ -11,40 +11,32 @@ import retrofit2.Response;
 import java.io.IOException;
 
 public class DishSteps {
-    private String nombrePlato;
-    private Dish plato;
-    private Dish platoResponse;
-    private String categoria;
 
     public DishSteps() {
     }
 
     @Given("^Un plato de nombre \"([^\"]*)\"$")
     public void un_plato_de_nombre_x(String nombrePlato) {
-        this.nombrePlato = nombrePlato;
-    }
-
-    @Given("^Una categoria de id \"([^\"]*)\"$")
-    public void una_categoria_de_id_x(String categoria) {
-        this.categoria = categoria;
+        DishScenario.getInstance().setDishName(nombrePlato);
     }
 
     @When("Doy de alta el plato")
     public void doy_de_alta_el_plato() throws IOException {
-        this.plato = new Dish();
-        this.plato.setName(this.nombrePlato);
-        this.plato.setCategoryId(this.categoria);
-        Call<Dish> call = ScummApi.getInstance().getService().createDish(this.plato);
+        Dish plato = new Dish();
+        plato.setName(DishScenario.getInstance().getDishName());
+        plato.setCategoryId(CategoryScenario.getInstance().getCategory().getId());
+        Call<Dish> call = ScummApi.getInstance().getService().createDish(plato);
         Response<Dish> response = call.execute();
-        platoResponse = response.body();
         Assert.assertTrue(response.isSuccessful());
+        DishScenario.getInstance().setDish(response.body());
     }
 
     @Then("El plato esta en la carta")
     public void el_plato_esta_en_la_carta() throws IOException {
-        Call<Dish> call = ScummApi.getInstance().getService().getDish(this.platoResponse.getId());
+        Call<Dish> call = ScummApi.getInstance().getService().getDish(DishScenario.getInstance().getDish().getId());
         Response<Dish> response = call.execute();
         Assert.assertTrue(response.isSuccessful());
-        Assert.assertEquals(this.nombrePlato, response.body().getName());
+        Assert.assertEquals(DishScenario.getInstance().getDishName(), response.body().getName());
+        Assert.assertEquals(DishScenario.getInstance().getDish().getCategoryId(), response.body().getCategoryId());
     }
 }

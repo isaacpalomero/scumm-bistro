@@ -13,29 +13,26 @@ import java.util.List;
 
 public class CategoriaSteps {
 
-    private String categoryName;
-    private Category category;
 
     @Given("Una categoria de nombre {string}")
     public void dada_una_categroia(String categoryName){
-
-        this.categoryName = categoryName;
+        CategoryScenario.getInstance().setCategoryName(categoryName);
     }
 
     @When("Cuando doy de alta la categoria")
     public void cuando_doy_de_alta_la_categoria() throws IOException {
-        category = new Category();
-        category.setName(categoryName);
+        Category category = new Category();
+        category.setName(CategoryScenario.getInstance().getCategoryName());
         Call<Category> result = ScummApi.getInstance().getService().createCategory(category);
         Response<Category> response = result.execute();
-        category.setId(response.body().getId());
+        CategoryScenario.getInstance().setCategory(response.body());
     }
 
     @Then("Aparece en el listado")
     public void aparece_en_el_listado() throws IOException {
-        Call<Category> call = ScummApi.getInstance().getService().getCategory(this.category.getId());
+        Call<Category> call = ScummApi.getInstance().getService().getCategory(CategoryScenario.getInstance().getCategory().getId());
         Response<Category> response = call.execute();
         Assert.assertTrue(response.isSuccessful());
-        Assert.assertEquals(categoryName, response.body().getName());
+        Assert.assertEquals(CategoryScenario.getInstance().getCategoryName(), response.body().getName());
     }
 }

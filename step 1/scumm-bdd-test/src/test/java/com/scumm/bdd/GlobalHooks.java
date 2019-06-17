@@ -1,5 +1,6 @@
 package com.scumm.bdd;
 
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 
 import java.net.URISyntaxException;
@@ -24,5 +25,11 @@ public class GlobalHooks {
                 e.printStackTrace();
             }
         }
+    }
+
+    @After
+    public void cleanData(){
+        CategoryScenario.clean();
+        DishScenario.clean();
     }
 }
