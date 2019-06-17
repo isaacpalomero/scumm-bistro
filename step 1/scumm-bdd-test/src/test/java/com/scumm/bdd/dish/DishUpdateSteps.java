@@ -1,8 +1,7 @@
 package com.scumm.bdd.dish;
 
-import com.scumm.bdd.CategoryScenario;
-import com.scumm.bdd.DishScenario;
 import com.scumm.bdd.ScummApi;
+import com.scumm.bdd.category.CategoryScenario;
 import com.scumm.bdd.contracts.api.Category;
 import com.scumm.bdd.contracts.api.Dish;
 import cucumber.api.java.en.Given;

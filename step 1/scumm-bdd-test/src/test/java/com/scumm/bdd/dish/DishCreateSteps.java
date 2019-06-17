@@ -2,6 +2,7 @@ package com.scumm.bdd;
 
 import com.scumm.bdd.category.CategoryScenario;
 import com.scumm.bdd.contracts.api.Dish;
+import com.scumm.bdd.dish.DishScenario;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -11,9 +12,9 @@ import retrofit2.Response;
 
 import java.io.IOException;
 
-public class DishSteps {
+public class DishCreateSteps {
 
-    public DishSteps() {
+    public DishCreateSteps() {
     }
 
     @Given("^Un plato de nombre \"([^\"]*)\"$")
@@ -21,6 +22,7 @@ public class DishSteps {
         DishScenario.getInstance().setDishName(nombrePlato);
     }
 
+    @Given("Un nuevo plato")
     @When("Doy de alta el plato")
     public void doy_de_alta_el_plato() throws IOException {
         Dish plato = new Dish();

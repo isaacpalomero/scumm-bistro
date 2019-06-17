@@ -7,7 +7,6 @@ public class CategoryScenario {
 
     private String categoryName;
     private Category category;
-    private String categoryId;
 
     private CategoryScenario() {
     }
@@ -25,14 +24,6 @@ public class CategoryScenario {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-    public String getCategoryId() {
-        return this.categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
     }
 
     public Category getCategory() {

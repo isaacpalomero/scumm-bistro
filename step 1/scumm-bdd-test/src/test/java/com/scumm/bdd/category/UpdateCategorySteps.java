@@ -15,11 +15,6 @@ public class UpdateCategorySteps {
 
     private String newName;
 
-    @Given("Una categoria de id {string}")
-    public void dada_una_categoria_de_id_x(String id) {
-        CategoryScenario.getInstance().setCategoryId(id);
-    }
-
     @Given("Un nombre nuevo de categoria {string}")
     public void un_nombre_nuevo_de_categoria_x(String newName) {
         this.newName = newName;
@@ -27,18 +22,17 @@ public class UpdateCategorySteps {
 
     @When("Modifico una categoria")
     public void modifico_una_categoria() throws IOException {
-        Call<Category> call = ScummApi.getInstance().getService().getCategory(CategoryScenario.getInstance().getCategoryId());
-        Response<Category> getResponse = call.execute();
-        Category categoryToBeModified = getResponse.body();
-        categoryToBeModified.setName(this.newName);
+        Category category = CategoryScenario.getInstance().getCategory();
+        category.setName(newName);
 
-        Call<Category> updateCall = ScummApi.getInstance().getService().updateCategory(categoryToBeModified.getId(), categoryToBeModified);
-        updateCall.execute();
+        Call<Category> updateCall = ScummApi.getInstance().getService().updateCategory(category.getId(), category);
+        Response<Category> response = updateCall.execute();
+        Assert.assertTrue(response.isSuccessful());
     }
 
     @Then("Aparece la categoria modificada en el listado")
     public void  aparece_la_categoria_modificada_en_el_listado() throws IOException {
-        Call<Category> call = ScummApi.getInstance().getService().getCategory(CategoryScenario.getInstance().getCategoryId());
+        Call<Category> call = ScummApi.getInstance().getService().getCategory(CategoryScenario.getInstance().getCategory().getId());
         Response<Category> response = call.execute();
         Assert.assertTrue(response.isSuccessful());
         Assert.assertEquals(this.newName, response.body().getName());

@@ -15,14 +15,14 @@ public class DeleteCategorySteps {
 
     @When("Borro una categoria")
     public void borro_una_categoria() throws IOException {
-        Call<Category> call = ScummApi.getInstance().getService().deleteCategory(CategoryScenario.getInstance().getCategoryId());
+        Call<Category> call = ScummApi.getInstance().getService().deleteCategory(CategoryScenario.getInstance().getCategory().getId());
         Response<Category> getResponse = call.execute();
         getResponse.body();
     }
 
     @Then("Desaparece la categoria del listado")
     public void  desaparece_la_categoria_del_listado() throws IOException {
-        Call<Category> call = ScummApi.getInstance().getService().getCategory(CategoryScenario.getInstance().getCategoryId());
+        Call<Category> call = ScummApi.getInstance().getService().getCategory(CategoryScenario.getInstance().getCategory().getId());
         Response<Category> response = call.execute();
         Assert.assertFalse(response.isSuccessful());
         Assert.assertNull(response.body());
