@@ -19,6 +19,7 @@ bootJar {
 
 dependencies {
     compile project (":scumm-core")
+    compile project (":scumm-micros-contracts")
     compile("org.springframework.boot:spring-boot-starter-web")
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
