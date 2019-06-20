@@ -1,4 +1,7 @@
 include 'scumm-api'
 include 'scumm-core'
 include 'scumm-bdd-test'
+include 'scumm-micros'
+include 'scumm-bc-dish'
+include 'scumm-micros-contracts'
 

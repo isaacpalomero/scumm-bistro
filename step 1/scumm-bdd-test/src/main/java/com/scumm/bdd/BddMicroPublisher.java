@@ -29,8 +29,8 @@ public class BddMicroPublisher {
     private BddMicroPublisher() {
         ChannelConfiguration configuration = new ChannelConfiguration();
 
-        configuration.getExchange().setName("mrnoow");
-        String uri = System.getenv("MRNOOW_AMQP_SERVER")!=null? System.getenv("MRNOOW_AMQP_SERVER") : "amqp://micros_user:oJ3847PGtw3DCvbA1eeR2@localhost:5672";
+        configuration.getExchange().setName("Scumm");
+        String uri = System.getenv("SCUMM_AMQP_SERVER")!=null? System.getenv("SCUMM_AMQP_SERVER") : "amqp://micros_user:oJ3847PGtw3DCvbA1eeR2@localhost:5672";
 
         configuration.setUri(uri);
 

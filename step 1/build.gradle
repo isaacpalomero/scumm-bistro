@@ -14,7 +14,7 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'com.likocode', name: 'clitellum', version: '1.0.17'
+        compile group: 'com.likocode', name: 'clitellum', version: '1.0.19'
         compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.2'
 
 

@@ -31,7 +31,7 @@ public abstract class MicroBean implements Runnable {
     public abstract List<MicroServiceBase> getServices();
 
     public MicroBean() {
-   }
+    }
 
     @PostConstruct
     public void init() {
@@ -53,8 +53,7 @@ public abstract class MicroBean implements Runnable {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                logger.error("Error Sleep", e);
-                Thread.currentThread().interrupt();
+                e.printStackTrace();
             }
         }
     }
