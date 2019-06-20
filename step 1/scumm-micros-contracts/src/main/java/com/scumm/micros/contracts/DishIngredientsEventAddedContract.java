@@ -2,10 +2,10 @@ package com.scumm.micros.contracts;
 
 import java.util.List;
 
-public class DishIngredientsAdd {
+public class DishIngredientsEventAddedContract {
 
     private String id;
-    private List<DishIngredient> ingredients;
+    private List<DishIngredientContract> ingredients;
 
     public String getId() {
         return id;
@@ -15,11 +15,11 @@ public class DishIngredientsAdd {
         this.id = id;
     }
 
-    public List<DishIngredient> getIngredients() {
+    public List<DishIngredientContract> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<DishIngredient> ingredients) {
+    public void setIngredients(List<DishIngredientContract> ingredients) {
         this.ingredients = ingredients;
     }
 }

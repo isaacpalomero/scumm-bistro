@@ -1,6 +1,6 @@
 package com.scumm.micros.contracts;
 
-public class DishIngredient {
+public class DishIngredientContract {
     private String ingredientId;
     private int quantity;
 

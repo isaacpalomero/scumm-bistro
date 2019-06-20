@@ -21,7 +21,7 @@ public abstract class AbstractCrudController<TRepository extends MongoRepository
         TFactory extends IFactory<TModel, TContract>,TModel extends Model,TContract extends Contract> {
 
     private TRepository repository;
-    private ModelMapper mapper;
+    protected ModelMapper mapper;
     protected TFactory factory;
     private IContractValidator<TContract> validator;
     private final Class<TContract> typeTContract;

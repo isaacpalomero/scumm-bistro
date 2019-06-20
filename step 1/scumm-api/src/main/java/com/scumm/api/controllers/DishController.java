@@ -2,24 +2,21 @@ package com.scumm.api.controllers;
 
 import com.scumm.api.contracts.DishContract;
 import com.scumm.api.contracts.DishIngredientContract;
-import com.scumm.api.exceptions.ModelNotFoundException;
 import com.scumm.api.factories.IDishFactory;
 import com.scumm.api.factories.IDishIngredientFactory;
+import com.scumm.api.micros.MicroPublisher;
 import com.scumm.api.services.IDishService;
 import com.scumm.api.validators.IContractValidator;
 import com.scumm.core.domain.entities.Dish;
-import com.scumm.core.domain.entities.DishIngredient;
-import com.scumm.core.domain.entities.Ingredient;
-import com.scumm.core.domain.entities.Model;
 import com.scumm.core.domain.repositories.DishRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/dish")
@@ -35,23 +32,19 @@ public class DishController extends AbstractCrudController<DishRepository, IDish
         this.dishService = dishService;
     }
 
-    @PutMapping(path = "/{dishId}/addingredients/")
+    @PutMapping(value = "/{dishId}/addingredients")
     public ResponseEntity addIngredients(@PathVariable String dishId, @Valid @RequestBody List<DishIngredientContract> ingredientsContractList) {
-        Dish dish;
-        try {
-            dish = super.factory.getById(dishId);
-            if (dish != null) {
-                List<DishIngredient> ingredientList = dishIngredientsFactory.createDishIngredientsFromContracts(ingredientsContractList);
-                dishService.addIngredients(dish, ingredientList);
-                return new ResponseEntity<>(HttpStatus.OK);
 
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch(ModelNotFoundException ex) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+        com.scumm.micros.contracts.DishIngredientsAddContract dishIngredientsContractMessage = new com.scumm.micros.contracts.DishIngredientsAddContract();
+        dishIngredientsContractMessage.setId(dishId);
+        dishIngredientsContractMessage.setIngredients(ingredientsContractList.stream()
+                .map(entity -> super.mapper.map(entity, com.scumm.micros.contracts.DishIngredientContract.class))
+                .collect(Collectors.toList()));
+
+
+        MicroPublisher.getInstance().send("Dish.Ingredients.Add", dishIngredientsContractMessage);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
-
 
 }
