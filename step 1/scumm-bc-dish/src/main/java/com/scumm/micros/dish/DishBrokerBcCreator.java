@@ -9,12 +9,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 @PropertySource("classpath:application.properties")
 public class DishBrokerBcCreator implements CommandLineRunner {
 
     @Value("${message.rabbitmq.server}")
-    protected String rabbitServer;
+    private String rabbitServer;
 
     @Override
     public void run(String... args) throws Exception {

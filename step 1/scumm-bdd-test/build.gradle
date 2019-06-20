@@ -21,6 +21,8 @@ project.ext {
 dependencies {
     compile group: 'org.mongodb', name: 'mongo-java-driver', version: '3.10.2'
 
+    compile project (":scumm-micros-contracts")
+    
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
     compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.5.0'
 
