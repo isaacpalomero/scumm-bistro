@@ -1,4 +1,4 @@
-package com.scumm.bdd;
+package com.scumm.bdd.category;
 
 import com.scumm.bdd.contracts.api.Category;
 
@@ -27,7 +27,7 @@ public class CategoryScenario {
     }
 
     public Category getCategory() {
-        return category;
+        return this.category;
     }
 
     public void setCategory(Category category) {

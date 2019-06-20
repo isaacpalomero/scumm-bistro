@@ -1,5 +1,5 @@
 
-  Feature: Como restaurador quiero dar de alta los platos de la carta
+Feature: Como restaurador quiero dar de alta los platos de la carta
 
     Background: Creacion de una categoria para los platos de la carta
       Given Una categoria de nombre "Ensaladas"

@@ -1,4 +1,4 @@
-package com.scumm.bdd;
+package com.scumm.bdd.dish;
 
 import com.scumm.bdd.contracts.api.Dish;
 

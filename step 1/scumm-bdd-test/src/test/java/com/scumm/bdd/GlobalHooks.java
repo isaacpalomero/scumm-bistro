@@ -1,5 +1,7 @@
 package com.scumm.bdd;
 
+import com.scumm.bdd.category.CategoryScenario;
+import com.scumm.bdd.dish.DishScenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 
