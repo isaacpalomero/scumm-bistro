@@ -25,7 +25,7 @@ public class DishIngredientsAddSteps {
         dishIngredientContracts = new ArrayList<>();
         DishIngredientContract dishIngredientContract = new DishIngredientContract();
         dishIngredientContract.setQuantity(20);
-        dishIngredientContract.setIngredientId("2349182347978123");
+        dishIngredientContract.setIngredientId("5d0b5f6d2ab79c00014c048d");
         dishIngredientContracts.add(dishIngredientContract);
     }
 
