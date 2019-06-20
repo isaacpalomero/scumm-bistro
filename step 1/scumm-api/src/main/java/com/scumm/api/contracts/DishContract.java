@@ -1,6 +1,7 @@
 package com.scumm.api.contracts;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 public class DishContract extends Contract {
 
@@ -9,6 +10,8 @@ public class DishContract extends Contract {
 
     @NotEmpty(message = "Dish category can not be empty")
     private String categoryId;
+
+    private List<DishIngredientContract> ingredients;
 
     public String getName() {
         return name;
@@ -24,5 +27,13 @@ public class DishContract extends Contract {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public List<DishIngredientContract> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<DishIngredientContract> ingredients) {
+        this.ingredients = ingredients;
     }
 }
