@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(SharedConfiguration.class)
+//@Import(SharedConfiguration.class)
 public class App  extends MicroApp {
 
     @Autowired

@@ -22,7 +22,8 @@ public class DishMicroBean extends MicroBean {
     public List<MicroServiceBase> getServices() {
 
         List<MicroServiceBase> services = new ArrayList<>();
-        services.add(new IngredientsMicro(this.rabbitServer));
+        //services.add(new IngredientsMicro(this.rabbitServer));
+        services.add(new DishCreatorMicro(this.rabbitServer));
         return services;
     }
 }

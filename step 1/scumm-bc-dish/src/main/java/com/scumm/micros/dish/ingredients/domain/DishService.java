@@ -19,26 +19,26 @@ import java.util.List;
 @Service
 public class DishService implements IDishService {
 
-    private final ModelMapper mapper;
-    private final DishRepository repository;
-
-    @Autowired
-    public DishService(ModelMapper mapper, DishRepository repository) {
-        this.mapper = mapper;
-        this.repository = repository;
-    }
+//    private final ModelMapper mapper;
+//    private final DishRepository repository;
+//
+//    @Autowired
+//    public DishService(ModelMapper mapper, DishRepository repository) {
+//        this.mapper = mapper;
+//        this.repository = repository;
+//    }
 
 
     @Override
     public void addIngredients(DishIngredientsAddContract contract, IListener<Dish> delegate) throws Exception {
-        Dish dish = this.repository.findById(new ObjectId(contract.getId()))
-                .orElseThrow(ModelNotFoundException::new);
-        Type destinationType = new TypeToken<List<DishIngredient>>() {}.getType();
-        List<DishIngredient> dishIngredients = mapper.map(contract.getIngredients(), destinationType);
-
-        dish.addIngredients(dishIngredients);
-        repository.save(dish);
-
-        delegate.success(dish);
+//        Dish dish = this.repository.findById(new ObjectId(contract.getId()))
+//                .orElseThrow(ModelNotFoundException::new);
+//        Type destinationType = new TypeToken<List<DishIngredient>>() {}.getType();
+//        List<DishIngredient> dishIngredients = mapper.map(contract.getIngredients(), destinationType);
+//
+//        dish.addIngredients(dishIngredients);
+//        repository.save(dish);
+//
+//        delegate.success(dish);
     }
 }
