@@ -20,6 +20,12 @@ services:
       - 15672:15672
       - 5672:5672
 
+  scumm-admin-panel:
+    container_name: scumm_admin_panel
+    build: ./admin-panel
+    ports:
+      - 8081:80
+
   scumm-api:
     container_name: scumm_api
     build: ./scumm-api
