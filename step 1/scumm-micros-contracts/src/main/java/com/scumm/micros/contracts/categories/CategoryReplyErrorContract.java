@@ -1,6 +1,6 @@
 package com.scumm.micros.contracts.categories;
 
-public class CategoryReplyError {
+public class CategoryReplyErrorContract {
     private String message;
     private int code;
 
