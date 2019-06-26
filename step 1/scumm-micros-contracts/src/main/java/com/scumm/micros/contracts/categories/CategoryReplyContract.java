@@ -1,6 +1,6 @@
 package com.scumm.micros.contracts.categories;
 
-public class CategoryContract {
+public class CategoryReplyContract {
     private String name;
 
     public String getName() {
