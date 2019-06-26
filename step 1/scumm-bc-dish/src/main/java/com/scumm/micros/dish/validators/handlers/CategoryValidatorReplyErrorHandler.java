@@ -16,7 +16,7 @@ public class CategoryValidatorReplyErrorHandler extends BaseHandler<CategoryRepl
     public void handle() throws HandlerMessageException {
         DishEventCreateErrorContract errorContract = new DishEventCreateErrorContract();
         errorContract.setCode(400);
-        errorContract.setMessage("Bad request: invalid category id or invalid dish name");
+        errorContract.setMessage(getContract().getMessage());
         send("Dish.Event.Create.Error", errorContract);
     }
 }
