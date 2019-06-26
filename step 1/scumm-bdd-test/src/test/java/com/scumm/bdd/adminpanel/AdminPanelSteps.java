@@ -5,6 +5,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class AdminPanelSteps {
@@ -13,7 +14,7 @@ public class AdminPanelSteps {
 
     @Given("Un navegador")
     public void un_navegador(){
-        driver = new FirefoxDriver();
+        driver = new ChromeDriver();
     }
 
     @When("Entro en el panel de administracion")
