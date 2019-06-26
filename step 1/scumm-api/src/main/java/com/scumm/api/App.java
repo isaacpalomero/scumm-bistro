@@ -2,8 +2,6 @@ package com.scumm.api;
 
 import com.scumm.SharedConfiguration;
 import com.scumm.api.builders.IModelMapperBuilder;
-import org.bson.types.ObjectId;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableWebMvc
-@Import(SharedConfiguration.class)
+@Import({SharedConfiguration.class, WebConfig.class, SwaggerConfig.class})
 public class App {
 
     @Autowired
