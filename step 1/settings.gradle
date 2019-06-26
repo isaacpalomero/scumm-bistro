@@ -3,4 +3,5 @@ include 'scumm-core'
 include 'scumm-bdd-test'
 include 'scumm-bc-dish'
 include 'scumm-micros-contracts'
+include 'scumm-bc-category'
 
