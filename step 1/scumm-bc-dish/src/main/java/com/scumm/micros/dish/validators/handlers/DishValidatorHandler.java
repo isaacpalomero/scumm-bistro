@@ -26,6 +26,8 @@ public class DishValidatorHandler extends BaseHandler<DishCreateContract> {
     public void handle() throws HandlerMessageException {
 
         if (this.validator.validate(this.getContract())) {
+            getContext().put("dishName", getContract().getName());
+
             CategoryRequestContract categoryRequestContract = new CategoryRequestContract();
             categoryRequestContract.setId( getContract().getCategoryId());
             send("Category.Request", categoryRequestContract);
