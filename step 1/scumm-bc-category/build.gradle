@@ -1,0 +1,35 @@
+plugins {
+    id 'application'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+}
+
+sourceCompatibility = 1.8
+
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+application {
+    mainClassName = 'com.scumm.micros.category.App'
+}
+
+bootJar {
+    mainClassName = 'com.scumm.micros.category.App'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile project (":scumm-core")
+    compile project (":scumm-micros-contracts")
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'com.rabbitmq:amqp-client:5.6.0'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
