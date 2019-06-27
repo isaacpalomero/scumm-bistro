@@ -1,11 +1,13 @@
 package com.scumm.micros.dish;
 
 import com.clitellum.MicroServiceBase;
+import com.clitellum.annotations.DeadLetterChannel;
 import com.clitellum.annotations.Microservice;
 import com.clitellum.annotations.MicroserviceHandlers;
 
 @Microservice(id = "Validator", type = "Validator", bc = "Dish", publishBc = "Scumm")
 @MicroserviceHandlers(packageName = "com.scumm.micros.dish.validators.handlers")
+@DeadLetterChannel(value="ScummErrors")
 public class DishValidatorMicro extends MicroServiceBase {
 
     public DishValidatorMicro(String uri) {

@@ -3,7 +3,9 @@ package com.scumm.micros.dish.validators.domain.specifications;
 import com.scumm.core.domain.specifications.Specification;
 import com.scumm.micros.contracts.dishes.DishCreateContract;
 import org.bson.types.ObjectId;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DishCreateSpecification extends Specification<DishCreateContract> implements IDishCreateSpecification {
 
     @Override

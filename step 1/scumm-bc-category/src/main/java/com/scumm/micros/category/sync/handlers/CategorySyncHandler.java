@@ -21,7 +21,7 @@ public class CategorySyncHandler extends BaseHandler<CategoryRequestContract> {
     private ModelMapper mapper;
 
     private final String categoryReplyRoutingKey = "Category.Reply";
-    private final String categoryReplyErrorRoutingKey = "Category.ReplyError";
+    private final String categoryReplyErrorRoutingKey = "Category.Reply.Error";
 
     @Autowired
     public CategorySyncHandler(ICategorySyncService service, ModelMapper mapper) {

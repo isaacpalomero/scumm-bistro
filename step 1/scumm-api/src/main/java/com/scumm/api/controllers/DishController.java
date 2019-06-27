@@ -51,10 +51,10 @@ public class DishController extends AbstractCrudController<DishRepository, IDish
     @PostMapping
     @Override
     public ResponseEntity create(@Valid @RequestBody DishContract contract) {
-        com.scumm.micros.contracts.dishes.DishContract microContract = new com.scumm.micros.contracts.dishes.DishContract();
+        com.scumm.micros.contracts.dishes.DishCreateContract microContract = new com.scumm.micros.contracts.dishes.DishCreateContract();
         microContract.setName(contract.getName());
-        microContract.setCategoryName("Prueba");
-        MicroPublisher.getInstance().send("Dish.Create.Validated", microContract);
+        microContract.setCategoryId(contract.getCategoryId());
+        MicroPublisher.getInstance().send("Dish.Create", microContract);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

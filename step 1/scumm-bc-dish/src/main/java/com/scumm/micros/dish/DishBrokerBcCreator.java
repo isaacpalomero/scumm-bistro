@@ -26,6 +26,7 @@ public class DishBrokerBcCreator implements CommandLineRunner {
         channel.exchangeDeclare("Scumm", BuiltinExchangeType.TOPIC , true, false, null);
         channel.exchangeDeclare("Dish", BuiltinExchangeType.TOPIC , true, false, null);
         channel.exchangeBind("Dish", "Scumm", "Dish.#");
+        channel.exchangeBind("Dish", "Scumm", "Category.Reply#");
         channel.close();
         connection.close();
     }

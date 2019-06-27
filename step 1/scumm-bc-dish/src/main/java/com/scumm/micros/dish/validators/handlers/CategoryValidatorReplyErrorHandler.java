@@ -9,7 +9,7 @@ import com.scumm.micros.contracts.dishes.DishEventCreateErrorContract;
 import org.springframework.stereotype.Component;
 
 @Component
-@MessageHandler(key = "Category.Reply.Error", contractType = CategoryReplyContract.class)
+@MessageHandler(key = "Category.Reply.Error", contractType = CategoryReplyErrorContract.class)
 public class CategoryValidatorReplyErrorHandler extends BaseHandler<CategoryReplyErrorContract> {
 
     @Override

@@ -55,3 +55,17 @@ services:
     links:
       - scummmongo
       - scummrabbit
+
+  scumm-bc-category:
+    container_name: scumm_bc_category
+    build: ./scumm-bc-category
+    environment:
+      - SCUMM_ENVIRONMENT=docker
+      - SCUMM_MONGODB_URI=mongodb://scummmongo:27017
+      - SCUMM_AMQP_SERVER=amqp://micros_user:oJ3847PGtw3DCvbA1eeR2@scummrabbit:5672
+    depends_on:
+      - scummmongo
+      - scummrabbit
+    links:
+      - scummmongo
+      - scummrabbit
